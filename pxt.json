@@ -5,8 +5,7 @@
         "core": "*",
         "radio": "*",
         "microphone": "*",
-        "radio-broadcast": "*",
-        "pxt-kitronik-lab-bit": "github:kitronikltd/pxt-kitronik-lab-bit#v0.2.3"
+        "radio-broadcast": "*"
     },
     "files": [
         "main.blocks",
@@ -24,5 +23,5 @@
     "supportedTargets": [
         "microbit"
     ],
-    "preferredEditor": "tsprj"
+    "preferredEditor": "blocksprj"
 }
