@@ -33,4 +33,4 @@ radio.onReceivedMessage(RadioMessage.need_water, function () {
         # . # . #
         `)
 })
-radio.setGroup(91407)
+radio.setGroup(99)
