@@ -21,10 +21,10 @@ radio.onReceivedMessage(RadioMessage.sad, function () {
 input.onButtonPressed(Button.B, function () {
     basic.clearScreen()
     music.stopMelody(MelodyStopOptions.All)
+    basic.showIcon(IconNames.Heart)
 })
 radio.onReceivedMessage(RadioMessage.need_water, function () {
     music.setVolume(255)
-    music.play(music.stringPlayable("C5 - C5 - C5 - C5 - ", 190), music.PlaybackMode.UntilDone)
     basic.showLeds(`
         # . # . #
         # . # . #
@@ -32,5 +32,6 @@ radio.onReceivedMessage(RadioMessage.need_water, function () {
         . . . . .
         # . # . #
         `)
+    music.play(music.stringPlayable("C5 - C5 - C5 - C5 - ", 190), music.PlaybackMode.LoopingInBackground)
 })
 radio.setGroup(99)
