@@ -4,7 +4,8 @@ enum RadioMessage {
     happy = 4585,
     sad = 2621,
     need_water = 18906,
-    check_humidity = 20801
+    check_humidity = 20801,
+    check_light = 55679
 }
 input.onButtonPressed(Button.A, function () {
     radio.sendMessage(RadioMessage.check_plant_wetness)
@@ -26,6 +27,9 @@ input.onButtonPressed(Button.AB, function () {
 })
 input.onButtonPressed(Button.B, function () {
     radio.sendMessage(RadioMessage.check_humidity)
+})
+input.onLogoEvent(TouchButtonEvent.Pressed, function () {
+    radio.sendMessage(RadioMessage.check_light)
 })
 radio.onReceivedMessage(RadioMessage.need_water, function () {
     music.setVolume(255)
