@@ -8,7 +8,8 @@ enum RadioMessage {
     check_light = 55679,
     nighttime = 53104,
     manual_water = 45559,
-    play_music = 42561
+    play_music = 42561,
+    water_success = 40104
 }
 input.onButtonPressed(Button.A, function () {
     if (!(music.isSoundPlaying())) {
@@ -28,6 +29,20 @@ radio.onReceivedMessage(RadioMessage.sad, function () {
     basic.showIcon(IconNames.Sad)
     basic.pause(5000)
     basic.showIcon(IconNames.SmallHeart)
+})
+radio.onReceivedMessage(RadioMessage.water_success, function () {
+    basic.showLeds(`
+        . . # . .
+        . . # . .
+        . # # # .
+        . # # # .
+        . . # . .
+        `)
+    music._playDefaultBackground(music.builtInPlayableMelody(Melodies.PowerUp), music.PlaybackMode.InBackground)
+    basic.showIcon(IconNames.Yes)
+    basic.pause(100)
+    basic.clearScreen()
+    basic.showIcon(IconNames.Heart)
 })
 radio.onReceivedMessage(RadioMessage.nighttime, function () {
     basic.showLeds(`
