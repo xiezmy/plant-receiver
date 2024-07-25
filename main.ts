@@ -5,10 +5,15 @@ enum RadioMessage {
     sad = 2621,
     need_water = 18906,
     check_humidity = 20801,
-    check_light = 55679
+    check_light = 55679,
+    nighttime = 53104
 }
 input.onButtonPressed(Button.A, function () {
-    radio.sendMessage(RadioMessage.check_plant_wetness)
+    if (music.isSoundPlaying()) {
+        basic.pause(100)
+    } else {
+        radio.sendMessage(RadioMessage.check_plant_wetness)
+    }
 })
 radio.onReceivedMessage(RadioMessage.happy, function () {
     music.setVolume(255)
@@ -20,10 +25,23 @@ radio.onReceivedMessage(RadioMessage.sad, function () {
     music._playDefaultBackground(music.builtInPlayableMelody(Melodies.Wawawawaa), music.PlaybackMode.InBackground)
     basic.showIcon(IconNames.Sad)
 })
+radio.onReceivedMessage(RadioMessage.nighttime, function () {
+    basic.showLeds(`
+        . . # # .
+        . . . # #
+        . . . # #
+        . . . # #
+        . . # # .
+        `)
+    music._playDefaultBackground(music.builtInPlayableMelody(Melodies.PowerDown), music.PlaybackMode.InBackground)
+})
 input.onButtonPressed(Button.AB, function () {
     basic.clearScreen()
     music.stopMelody(MelodyStopOptions.All)
     basic.showIcon(IconNames.Heart)
+})
+radio.onReceivedString(function (receivedString) {
+    basic.showString(receivedString)
 })
 input.onButtonPressed(Button.B, function () {
     radio.sendMessage(RadioMessage.check_humidity)
