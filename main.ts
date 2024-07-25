@@ -40,7 +40,7 @@ radio.onReceivedMessage(RadioMessage.nighttime, function () {
     music._playDefaultBackground(music.builtInPlayableMelody(Melodies.PowerDown), music.PlaybackMode.InBackground)
 })
 input.onButtonPressed(Button.AB, function () {
-    radio.sendMessage(RadioMessage.play_music)
+    radio.sendMessage(RadioMessage.manual_water)
 })
 radio.onReceivedString(function (receivedString) {
     basic.showString(receivedString)
@@ -51,9 +51,7 @@ input.onButtonPressed(Button.B, function () {
     }
 })
 input.onGesture(Gesture.Shake, function () {
-    basic.clearScreen()
-    music.stopMelody(MelodyStopOptions.All)
-    basic.showIcon(IconNames.Heart)
+    radio.sendMessage(RadioMessage.play_music)
 })
 input.onLogoEvent(TouchButtonEvent.Pressed, function () {
     radio.sendMessage(RadioMessage.check_light)
@@ -68,6 +66,10 @@ radio.onReceivedMessage(RadioMessage.need_water, function () {
         # . # . #
         `)
     music.play(music.stringPlayable("C5 - C5 - C5 - C5 - ", 190), music.PlaybackMode.LoopingInBackground)
+    basic.pause(5000)
+    basic.clearScreen()
+    music.stopMelody(MelodyStopOptions.All)
+    basic.showIcon(IconNames.Heart)
 })
 radio.setGroup(99)
 basic.showIcon(IconNames.Heart)
