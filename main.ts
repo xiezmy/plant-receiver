@@ -7,7 +7,8 @@ enum RadioMessage {
     check_humidity = 20801,
     check_light = 55679,
     nighttime = 53104,
-    manual_water = 45559
+    manual_water = 45559,
+    play_music = 42561
 }
 input.onButtonPressed(Button.A, function () {
     if (!(music.isSoundPlaying())) {
@@ -39,7 +40,7 @@ radio.onReceivedMessage(RadioMessage.nighttime, function () {
     music._playDefaultBackground(music.builtInPlayableMelody(Melodies.PowerDown), music.PlaybackMode.InBackground)
 })
 input.onButtonPressed(Button.AB, function () {
-    radio.sendMessage(RadioMessage.manual_water)
+    radio.sendMessage(RadioMessage.play_music)
 })
 radio.onReceivedString(function (receivedString) {
     basic.showString(receivedString)
