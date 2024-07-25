@@ -6,12 +6,11 @@ enum RadioMessage {
     need_water = 18906,
     check_humidity = 20801,
     check_light = 55679,
-    nighttime = 53104
+    nighttime = 53104,
+    manual_water = 45559
 }
 input.onButtonPressed(Button.A, function () {
-    if (music.isSoundPlaying()) {
-        basic.pause(100)
-    } else {
+    if (!(music.isSoundPlaying())) {
         radio.sendMessage(RadioMessage.check_plant_wetness)
     }
 })
@@ -19,11 +18,15 @@ radio.onReceivedMessage(RadioMessage.happy, function () {
     music.setVolume(255)
     music._playDefaultBackground(music.builtInPlayableMelody(Melodies.BaDing), music.PlaybackMode.InBackground)
     basic.showIcon(IconNames.Happy)
+    basic.pause(5000)
+    basic.showIcon(IconNames.Heart)
 })
 radio.onReceivedMessage(RadioMessage.sad, function () {
     music.setVolume(255)
     music._playDefaultBackground(music.builtInPlayableMelody(Melodies.Wawawawaa), music.PlaybackMode.InBackground)
     basic.showIcon(IconNames.Sad)
+    basic.pause(5000)
+    basic.showIcon(IconNames.SmallHeart)
 })
 radio.onReceivedMessage(RadioMessage.nighttime, function () {
     basic.showLeds(`
@@ -36,15 +39,20 @@ radio.onReceivedMessage(RadioMessage.nighttime, function () {
     music._playDefaultBackground(music.builtInPlayableMelody(Melodies.PowerDown), music.PlaybackMode.InBackground)
 })
 input.onButtonPressed(Button.AB, function () {
-    basic.clearScreen()
-    music.stopMelody(MelodyStopOptions.All)
-    basic.showIcon(IconNames.Heart)
+    radio.sendMessage(RadioMessage.manual_water)
 })
 radio.onReceivedString(function (receivedString) {
     basic.showString(receivedString)
 })
 input.onButtonPressed(Button.B, function () {
-    radio.sendMessage(RadioMessage.check_humidity)
+    if (!(music.isSoundPlaying())) {
+        radio.sendMessage(RadioMessage.check_humidity)
+    }
+})
+input.onGesture(Gesture.Shake, function () {
+    basic.clearScreen()
+    music.stopMelody(MelodyStopOptions.All)
+    basic.showIcon(IconNames.Heart)
 })
 input.onLogoEvent(TouchButtonEvent.Pressed, function () {
     radio.sendMessage(RadioMessage.check_light)
